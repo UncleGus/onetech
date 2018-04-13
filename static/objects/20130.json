@@ -1,0 +1,1 @@
+{"id":"20130","name":"Bronze Ingot","transitionsToward":[{"targetID":"20140","newActorID":"20130","newTargetID":"235","hand":true}],"transitionsAway":[{"actorID":"20130","targetID":"235","newTargetID":"20140"}],"complexity":731,"techTree":[{"id":"20140","nodes":[{"decay":"10s"},{"id":"20165","nodes":[{"id":"20164","nodes":[]}]}]}]}
