@@ -6,19 +6,20 @@ const _ = require('lodash');
 
 const GameObject = require('./GameObject');
 const Category = require('./Category');
-const Transition = require('./Transition');
+const TransitionImporter = require('./TransitionImporter');
 const VersionPopulator = require('./VersionPopulator');
 const ComplexityCalculator = require('./ComplexityCalculator');
 const SpriteProcessor = require('./SpriteProcessor');
 const ObjectFilters = require('./ObjectFilters');
 
 class GameData {
-  constructor(processDir) {
+  constructor(processDir, dataDir) {
     this.processDir = processDir;
-    this.dataDir = processDir + "/OneLifeData7";
+    this.dataDir = dataDir;
     this.staticDir = processDir + "/../static";
     this.staticDevDir = processDir + "/../static-dev";
     this.objects = {};
+    this.categories = [];
   }
 
   download(gitURL) {
@@ -46,14 +47,19 @@ class GameData {
     this.eachFileInDir("categories", (content, _filename) => {
       const category = new Category(content);
       category.addToObjects(this.objects);
+      this.categories.push(category);
     });
   }
 
   importTransitions() {
+    const importer = new TransitionImporter();
     this.eachFileInDir("transitions", (content, filename) => {
-      const transition = new Transition(content, filename);
-      transition.addToObjects(this.objects);
+      importer.importFromFile(content, filename);
     });
+    importer.splitCategories(this.categories);
+    importer.mergeGenericTransitions();
+    importer.mergeAttackTransitions();
+    importer.addToObjects(this.objects);
   }
 
   populateVersions() {

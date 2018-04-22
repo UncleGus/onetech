@@ -18,19 +18,55 @@ class SpriteProcessor {
   }
 
   processObject(object) {
+    this.renderSprites(this.visibleSprites(object), object.id);
+
+    // Draw only the last sprite
+    if (object.data.numUses > 1 && object.transitionsAway.filter(t => t.lastUseActor || t.lastUseTarget).length > 0) {
+      this.renderSprites(this.lastSprites(object), object.id + "_last");
+    }
+  }
+
+  visibleSprites(object) {
+    const hideIndexes = object.data.useVanishIndex == -1 && object.data.numUses > 1 ?
+      object.data.useAppearIndex.split(",").map(i => parseInt(i)) :
+      [];
+    // Draw sprites as if they were 20 years old
+    return object.sprites.filter((s,i) => !s.beyondAge(20) && !hideIndexes.includes(i))
+  }
+
+  lastSprites(object) {
+    if (object.data.useVanishIndex != -1) {
+      const hideIndexes = object.data.useVanishIndex.split(",").map(i => parseInt(i));
+      hideIndexes.shift(); // still draw the first sprite
+      return this.visibleSprites(object).filter((s,i) => !hideIndexes.includes(i));
+    }
+    if (object.data.useAppearIndex != -1) {
+      const useIndexes = object.data.useAppearIndex.split(",").map(i => parseInt(i))
+      const indexes = useIndexes.filter((_, i) => i+1 < parseInt(object.data.numUses));
+      const useSprites = object.sprites.filter((s,i) => indexes.includes(i));
+      const sprites = this.visibleSprites(object);
+      // Insert the use sprites after the last index
+      // add 2 to work around goose pond rendering
+      sprites.splice(indexes.pop() - useSprites.length + 2, 0, ...useSprites);
+      return sprites;
+    }
+    return object.sprites;
+  }
+
+  renderSprites(sprites, name) {
     this.context.setTransform(1, 0, 0, 1, 0, 0);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    for (var sprite of object.sprites) {
+    for (var sprite of sprites) {
       this.parseSpriteFile(sprite);
       this.drawSprite(sprite);
     }
 
-    const bounds = this.objectBounds(object);
+    const bounds = this.spritesBounds(sprites);
     const width = bounds.maxX - bounds.minX;
     const height = bounds.maxY - bounds.minY;
 
-    const newCanvas = new Canvas(Math.max(width, 128), Math.max(height, 128));
+    const newCanvas = new Canvas(width, height);
     const newContext = newCanvas.getContext('2d');
 
     newContext.setTransform(1, 0, 0, 1, 0, 0);
@@ -47,13 +83,7 @@ class SpriteProcessor {
       height
     );
 
-    // Debug
-    this.context.beginPath(); //
-    this.context.rect(bounds.minX + this.canvas.width / 2, -bounds.maxY + this.canvas.height / 2, width, height);
-    this.context.stroke();
-    this.context.closePath(); //
-
-    fs.writeFileSync(`${this.pngDir}/obj_${object.id}.png`, newCanvas.toBuffer());
+    fs.writeFileSync(`${this.pngDir}/obj_${name}.png`, newCanvas.toBuffer());
   }
 
   parseSpriteFile(sprite) {
@@ -63,9 +93,6 @@ class SpriteProcessor {
   }
 
   drawSprite(sprite) {
-    // Draw sprites as if they were 20 years old
-    if (sprite.beyondAge(20)) return;
-
     this.drawSpriteImage(sprite, this.context);
 
     if (sprite.color.find(c => c < 1.0))
@@ -123,13 +150,13 @@ class SpriteProcessor {
     this.context.globalCompositeOperation = previousOperation;
   }
 
-  objectBounds(object) {
+  spritesBounds(sprites) {
     var maxX = 0;
     var maxY = 0;
     var minX = 0;
     var minY = 0;
 
-    for (var sprite of object.sprites) {
+    for (var sprite of sprites) {
       for (var point of this.spritePoints(sprite)) {
         if (point.x > maxX) maxX = point.x + 2;
         if (point.x < minX) minX = point.x - 2;
@@ -138,7 +165,65 @@ class SpriteProcessor {
       }
     }
 
+    // Trim transparent pixels off
+    const padding = 15;
+    const threshold = 3*255;
+    const image = this.context.getImageData(
+      minX + this.canvas.width / 2,
+      -maxY + this.canvas.height / 2,
+      maxX - minX,
+      maxY - minY
+    );
+    minX += this.leftTrim(image, threshold) - padding;
+    maxX -= this.rightTrim(image, threshold) - padding;
+    maxY -= this.topTrim(image, threshold) - padding;
+    minY += this.bottomTrim(image, threshold) - padding;
+
     return {minX, minY, maxX, maxY};
+  }
+
+  leftTrim(image, threshold) {
+    for (let col=0; col < image.width; col++) {
+      let opacity = 0;
+      for (let row=0; row < image.height; row++) {
+        opacity += image.data[(row*image.width+col)*4+3]; // Alpha pixel
+        if (opacity > threshold) return col;
+      }
+    }
+    throw "Unable to find opaque pixels in image";
+  }
+
+  rightTrim(image, threshold) {
+    for (let col=image.width-1; col >= 0; col--) {
+      let opacity = 0;
+      for (let row=image.height-1; row >= 0; row--) {
+        opacity += image.data[(row*image.width+col)*4+3]; // Alpha pixel
+        if (opacity > threshold) return image.width-1-col;
+      }
+    }
+    throw "Unable to find opaque pixels in image";
+  }
+
+  topTrim(image, threshold) {
+    for (let row=0; row < image.height; row++) {
+      let opacity = 0;
+      for (let col=0; col < image.width; col++) {
+        opacity += image.data[(row*image.width+col)*4+3]; // Alpha pixel
+        if (opacity > threshold) return row;
+      }
+    }
+    throw "Unable to find opaque pixels in image";
+  }
+
+  bottomTrim(image, threshold) {
+    for (let row=image.height-1; row >= 0; row--) {
+      let opacity = 0;
+      for (let col=image.width-1; col >= 0; col--) {
+        opacity += image.data[(row*image.width+col)*4+3]; // Alpha pixel
+        if (opacity > threshold) return image.height-1-row;
+      }
+    }
+    throw "Unable to find opaque pixels in image";
   }
 
   spritePoints(sprite) {

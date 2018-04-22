@@ -1,16 +1,16 @@
 "use strict";
 
-const fs = require('fs');
-
 const Sprite = require('./Sprite');
 const Complexity = require('./Complexity');
+const Recipe = require('./Recipe');
 
 const BIOMES = {
   0: 'grassland',
   1: 'swamp',
   2: 'prairie',
   3: 'rocky',
-  4: 'snow'
+  4: 'snow',
+  5: 'desert'
 }
 
 class GameObject {
@@ -92,16 +92,38 @@ class GameObject {
     if (this.complexity.value)
       result.complexity = this.complexity.value;
 
+    if (this.complexity.difficulty)
+      result.difficulty = this.complexity.difficulty;
+
     if (this.data.clothing != "n") {
       result.clothing = this.data.clothing;
       result.insulation = this.insulation();
+    }
+
+    if (this.data.mapChance > 0) {
+      result.mapChance = parseFloat(this.data.mapChance);
+      result.biomes = this.biomes();
+    }
+
+    if (this.numSlots() > 0) {
+      result.numSlots = this.numSlots();
+      result.slotSize = parseInt(this.data.slotSize);
     }
 
     let techTree = this.techTreeNodes(3);
     if (techTree)
       result.techTree = techTree;
 
+    let recipe = new Recipe(this);
+    recipe.generate();
+    if (recipe.hasData())
+      result.recipe = recipe.jsonData();
+
     return result;
+  }
+
+  biomes() {
+    return this.data.biomes.map(name => name[0].toUpperCase() + name.substring(1)).join(", ");
   }
 
   hasSprite() {
@@ -109,18 +131,22 @@ class GameObject {
   }
 
   sortWeight() {
-    return -this.version*10000 + -this.complexity.value;
+    return -parseInt(this.id);
   }
 
   isTool() {
     for (var transition of this.transitionsAway) {
-      if (transition.actor == this && transition.tool) return true;
+      if (transition.actor == this && transition.target && transition.tool) return true;
     }
     return false;
   }
 
+  numSlots() {
+    return parseInt(this.data.numSlots.split('#')[0]);
+  }
+
   isCraftableContainer() {
-    return this.data.numSlots.split('#')[0] > 0 && !this.isGrave();
+    return this.numSlots() > 0 && !this.isGrave();
   }
 
   isGrave() {

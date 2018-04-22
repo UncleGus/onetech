@@ -7,6 +7,11 @@ class Complexity {
   constructor({ value, tools }) {
     this.value = value;
     this.tools = tools || [];
+    this.unusedObjects = []; // non-tools that are leftover from transitions
+  }
+
+  clone() {
+    return new Complexity({value: this.value, tools: this.tools.slice(0)});
   }
 
   hasValue() {
@@ -34,14 +39,16 @@ class Complexity {
   }
 
   addTools(tools) {
-    for (var tool of tools) {
+    for (var tool of tools)
       this.addTool(tool);
-    }
   }
 
   addTool(tool) {
-    if (tool && tool.complexity.hasValue() && tool.complexity.value < this.value && !this.tools.includes(tool)) {
-      this.tools.push(tool);
+    if (tool) {
+      if (tool.complexity.hasValue() && tool.complexity.value < this.value && !this.tools.includes(tool))
+        this.tools.push(tool);
+      else if (!this.unusedObjects.includes(tool))
+        this.unusedObjects.push(tool);
     }
   }
 
@@ -72,8 +79,12 @@ class Complexity {
   }
 
   consumeTool(tool) {
-    if (tool && this.tools.includes(tool))
-      this.tools = this.tools.filter(t => t != tool);
+    if (tool) {
+      if (this.tools.includes(tool))
+        this.tools = this.tools.filter(t => t != tool);
+      if (this.unusedObjects.includes(tool))
+        this.unusedObjects = this.unusedObjects.filter(t => t != tool);
+    }
   }
 
   // For use in an array sort function, returns 1, -1 or 0 depending
