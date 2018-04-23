@@ -74,7 +74,8 @@ class Complexity {
     if (this.hasValue()) {
       this.value -= amount;
       if (this.value < 0)
-        throw "Complexity value reached negative, something must be wrong";
+        // throw "Complexity value reached negative, something must be wrong";
+        this.value = null;
     }
   }
 

@@ -1,0 +1,1 @@
+{"id":"20759","name":"Bronze Chisel On Flat Rock - forged","transitionsToward":[{"actorID":"20665","targetID":"291","newTargetID":"20759"}],"transitionsAway":[],"techTree":[{"id":"20665","nodes":[{"decay":"1s"},{"id":"20679","nodes":[{"id":"20765","nodes":[]}]}]},{"id":"291","nodes":null}]}

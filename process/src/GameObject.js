@@ -8,9 +8,10 @@ const BIOMES = {
   0: 'grassland',
   1: 'swamp',
   2: 'prairie',
-  3: 'rocky',
+  3: 'rocky (copper)',
   4: 'snow',
-  5: 'desert'
+  5: 'desert',
+  200: 'rocky (tin)'
 }
 
 class GameObject {

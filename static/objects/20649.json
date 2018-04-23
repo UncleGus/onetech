@@ -1,0 +1,1 @@
+{"id":"20649","name":"Copper Chisel On Flat Rock - forged","transitionsToward":[{"actorID":"20590","targetID":"291","newTargetID":"20649"}],"transitionsAway":[{"targetID":"20649","newActorID":"20664","newTargetID":"291","hand":true}],"techTree":[{"id":"20590","nodes":[{"decay":"1s"},{"id":"20664","nodes":[{"id":"20649","nodes":[]}]}]},{"id":"291","nodes":null}]}

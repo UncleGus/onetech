@@ -1,6 +1,6 @@
 const GameData = require('./src/GameData');
 
-const gitURL = process.env.ONETECH_PROCESS_GIT_URL || "https://github.com/jasonrohrer/OneLifeData7.git";
+const gitURL = process.env.ONETECH_PROCESS_GIT_URL || "https://github.com/UncleGus/OneLifeData7.git";
 const gitPath = process.env.ONETECH_PROCESS_GIT_PATH || (__dirname + "/OneLifeData7");
 
 const gameData = new GameData(__dirname, gitPath);
@@ -20,8 +20,8 @@ gameData.importTransitions();
 console.log("Populating versions...");
 gameData.populateVersions();
 
-console.log("Calculating object complexity...");
-gameData.calculateObjectComplexity();
+// console.log("Calculating object complexity...");
+// gameData.calculateObjectComplexity();
 
 console.log("Exporting objects...");
 gameData.exportObjects();
