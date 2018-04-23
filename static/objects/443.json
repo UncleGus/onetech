@@ -1,1 +1,1 @@
-{"id":"443","name":"Smithing Hammer Head","transitionsToward":[],"transitionsAway":[{"actorID":"443","targetID":"69","newTargetID":"441"},{"actorID":"69","targetID":"443","newTargetID":"441"}],"version":36}
+{"id":"443","name":"Smithing Hammer Head","transitionsToward":[],"transitionsAway":[{"actorID":"443","targetID":"69","newTargetID":"441"},{"actorID":"69","targetID":"443","newTargetID":"441"}],"transitionsTimed":[],"version":36}

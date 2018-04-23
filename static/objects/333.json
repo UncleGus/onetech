@@ -1,1 +1,1 @@
-{"id":"333","name":"Steel Ax Head","transitionsToward":[],"transitionsAway":[{"actorID":"333","targetID":"67","newTargetID":"334"},{"actorID":"67","targetID":"333","newTargetID":"334"},{"actorID":"333","targetID":"235","newTargetID":"495"}],"version":20}
+{"id":"333","name":"Steel Ax Head","transitionsToward":[],"transitionsAway":[{"actorID":"333","targetID":"67","newTargetID":"334"},{"actorID":"67","targetID":"333","newTargetID":"334"},{"actorID":"333","targetID":"235","newTargetID":"495"}],"transitionsTimed":[],"version":20}

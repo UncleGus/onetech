@@ -1,1 +1,1 @@
-{"id":"685","name":"Steel Mining Pick Head","transitionsToward":[],"transitionsAway":[{"actorID":"67","targetID":"685","newTargetID":"684"},{"actorID":"685","targetID":"67","newTargetID":"684"},{"actorID":"685","targetID":"235","newTargetID":"495"}],"version":62}
+{"id":"685","name":"Steel Mining Pick Head","transitionsToward":[],"transitionsAway":[{"actorID":"67","targetID":"685","newTargetID":"684"},{"actorID":"685","targetID":"67","newTargetID":"684"},{"actorID":"685","targetID":"235","newTargetID":"495"}],"transitionsTimed":[],"version":62}

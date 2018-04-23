@@ -1,1 +1,1 @@
-{"id":"807","name":"Burdock Root","transitionsToward":[{"targetID":"806","newActorID":"807","hand":true}],"transitionsAway":[],"foodValue":7,"techTree":[{"id":"806","nodes":[{"id":"34","nodes":[{"id":"33","nodes":null},{"id":"32","nodes":null}]},{"id":"804","nodes":null}]}]}
+{"id":"807","name":"Burdock Root","transitionsToward":[{"targetID":"806","newActorID":"807","hand":true}],"transitionsAway":[],"transitionsTimed":[],"foodValue":7,"techTree":[{"id":"806","nodes":[{"id":"34","nodes":[{"id":"33","nodes":null},{"id":"32","nodes":null}]},{"id":"804","nodes":null}]}]}

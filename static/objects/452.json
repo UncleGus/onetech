@@ -1,1 +1,1 @@
-{"id":"452","name":"Steel Blade Blank - flat rock","transitionsToward":[{"targetID":"448","newTargetID":"452","decay":"10s"}],"transitionsAway":[],"version":36,"techTree":[{"decay":"10s"},{"id":"448","nodes":null}]}
+{"id":"452","name":"Steel Blade Blank - flat rock","transitionsToward":[{"targetID":"448","newTargetID":"452","decay":"10s"}],"transitionsAway":[],"transitionsTimed":[],"version":36,"techTree":[{"decay":"10s"},{"id":"448","nodes":null}]}

@@ -1,1 +1,1 @@
-{"id":"456","name":"Steel Froe Blade","transitionsToward":[],"transitionsAway":[{"actorID":"456","targetID":"69","newTargetID":"463"},{"actorID":"456","targetID":"235","newTargetID":"495"},{"actorID":"69","targetID":"456","newTargetID":"463"}],"version":36}
+{"id":"456","name":"Steel Froe Blade","transitionsToward":[],"transitionsAway":[{"actorID":"456","targetID":"69","newTargetID":"463"},{"actorID":"456","targetID":"235","newTargetID":"495"},{"actorID":"69","targetID":"456","newTargetID":"463"}],"transitionsTimed":[],"version":36}

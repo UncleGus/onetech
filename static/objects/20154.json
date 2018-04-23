@@ -1,1 +1,1 @@
-{"id":"20154","name":"Hot Bronze Froe Blade","transitionsToward":[],"transitionsAway":[{"targetID":"20154","newTargetID":"20125","decay":"10s"}]}
+{"id":"20154","name":"Hot Bronze Froe Blade","transitionsToward":[],"transitionsAway":[],"transitionsTimed":[{"targetID":"20154","newTargetID":"20125","decay":"10s"}]}

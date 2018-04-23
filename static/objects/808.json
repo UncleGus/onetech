@@ -1,1 +1,1 @@
-{"id":"808","name":"Wild Onion","transitionsToward":[{"targetID":"808","newActorID":"808","hand":true}],"transitionsAway":[{"targetID":"808","newActorID":"808","hand":true}],"foodValue":4,"techTree":[{"id":"808","nodes":[{"id":"808","nodes":[{"id":"808","nodes":[]}]}]}]}
+{"id":"808","name":"Wild Onion","transitionsToward":[{"targetID":"808","newActorID":"808","hand":true}],"transitionsAway":[{"targetID":"808","newActorID":"808","hand":true}],"transitionsTimed":[],"foodValue":4,"techTree":[{"id":"808","nodes":[{"id":"808","nodes":[{"id":"808","nodes":[]}]}]}]}

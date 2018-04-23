@@ -1,1 +1,1 @@
-{"id":"195","name":"Abandoned Rabbit Hole","transitionsToward":[{"targetID":"178","newActorID":"160","newTargetID":"195","hand":true}],"transitionsAway":[],"version":20,"techTree":[{"id":"178","nodes":[{"id":"176","nodes":[{"decay":"10s"},{"id":"174","nodes":[]}]}]}]}
+{"id":"195","name":"Abandoned Rabbit Hole","transitionsToward":[{"targetID":"178","newActorID":"160","newTargetID":"195","hand":true}],"transitionsAway":[],"transitionsTimed":[],"version":20,"techTree":[{"id":"178","nodes":[{"id":"176","nodes":[{"decay":"10s"},{"id":"174","nodes":[]}]}]}]}

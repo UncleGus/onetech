@@ -1,1 +1,1 @@
-{"id":"20144","name":"Hot Bronze Adze Head","transitionsToward":[],"transitionsAway":[{"targetID":"20144","newTargetID":"20112","decay":"10s"}]}
+{"id":"20144","name":"Hot Bronze Adze Head","transitionsToward":[],"transitionsAway":[],"transitionsTimed":[{"targetID":"20144","newTargetID":"20112","decay":"10s"}]}
